@@ -97,7 +97,7 @@ void mmap_cat(char *argv[]) {
     int fd; //file descriptor FTW!
     struct stat stat_buffer; // buffer for reading file stats
 
-    // allocate a 1Kb buffer on the stack (=static buffer size)
+    // allocate a pointer so we can later store the file in memory
     char *file_buffer;
 
     // open the file
@@ -106,7 +106,9 @@ void mmap_cat(char *argv[]) {
     // get the file stats, we'll need this to determine the file size
     fstat(fd, &stat_buffer);
 
-    // Map the file into memory (all at once), MAP_PRIVATE -> process private memory, not shared memory
+    // Allocate memory for the file (all at once), MAP_PRIVATE -> process private memory, not shared memory
+    // Note that this is not specific for files, all we're doing here is allocating st_size bytes, starting at a
+    // location chosen by the kernel (NULL). The begin address is stored in the 'fd' pointer.
     file_buffer = mmap(NULL, stat_buffer.st_size, PROT_READ, MAP_PRIVATE, fd, 0);
 
     // read the file in the buffer
