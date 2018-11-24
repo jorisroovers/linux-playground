@@ -1,10 +1,12 @@
-# http://man7.org/linux/man-pages/man2/socket.2.html
+// http://man7.org/linux/man-pages/man2/socket.2.html
 
 #include <sys/types.h>
 #include <sys/socket.h>
 
 
 int main(int argc, char **argv) {
+
+    // TODO: this isn't finished
 
 
     int socket(int domain, int type, int protocol);

@@ -8,10 +8,16 @@ SHARED_DIR = "/opt/linux-playground"
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
     config.vm.define "ubuntu", primary: true do |ubuntu|
-        ubuntu.vm.box = "ubuntu/trusty64"
+        ubuntu.vm.box = "ubuntu/bionic64"
         ubuntu.vm.synced_folder ".", SHARED_DIR
         ubuntu.vm.provision "shell", inline: "echo 'cd #{SHARED_DIR}' >> /home/vagrant/.bashrc"
+        ubuntu.vm.provision "shell", inline: "echo 'deb [trusted=yes] https://repo.iovisor.org/apt/xenial xenial-nightly main' | tee /etc/apt/sources.list.d/iovisor.list"
+        ubuntu.vm.provision "shell", inline: "apt-get update"
+        ubuntu.vm.provision "shell", inline: "apt-get install -y gcc"
+        ubuntu.vm.provision "shell", inline: "apt-get install -y bcc"
         ubuntu.vm.provision "shell", inline: "apt-get install -y cgroup-bin"
+        ubuntu.vm.provision "shell", inline: "apt-get install -y socat"
+        ubuntu.vm.provision "shell", inline: "apt-get install -y snmp snmpd snmp-mibs-downloader"
     end
 
     config.vm.define "centos" do |centos|
