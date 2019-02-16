@@ -26,7 +26,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         centos.vm.synced_folder ".", SHARED_DIR
         centos.vm.provision "shell", inline: "echo 'cd #{SHARED_DIR}' >> /home/vagrant/.bashrc"
         centos.vm.provision "shell", inline: "yum install -y strace"
-
     end
 
     if Vagrant.has_plugin?("vagrant-cachier")
