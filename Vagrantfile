@@ -12,12 +12,16 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         ubuntu.vm.synced_folder ".", SHARED_DIR
         ubuntu.vm.provision "shell", inline: "echo 'cd #{SHARED_DIR}' >> /home/vagrant/.bashrc"
         ubuntu.vm.provision "shell", inline: "echo 'deb [trusted=yes] https://repo.iovisor.org/apt/xenial xenial-nightly main' | tee /etc/apt/sources.list.d/iovisor.list"
+        ubuntu.vm.provision "shell", inline: "dpkg --add-architecture i386"
         ubuntu.vm.provision "shell", inline: "apt-get update"
+        ubuntu.vm.provision "shell", inline: "apt-get install -y libc6:i386 libncurses5:i386 libstdc++6:i386"
         ubuntu.vm.provision "shell", inline: "apt-get install -y gcc"
         ubuntu.vm.provision "shell", inline: "apt-get install -y bcc"
         ubuntu.vm.provision "shell", inline: "apt-get install -y cgroup-bin"
         ubuntu.vm.provision "shell", inline: "apt-get install -y socat"
         ubuntu.vm.provision "shell", inline: "apt-get install -y snmp snmpd snmp-mibs-downloader"
+        ubuntu.vm.provision "shell", inline: "apt-get install -y nasm"
+
     end
 
     config.vm.define "centos" do |centos|
