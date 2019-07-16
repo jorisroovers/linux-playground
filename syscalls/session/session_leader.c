@@ -14,7 +14,7 @@ int main(int argc, char **argv) {
     // fork returns PID '0' to the child and the actual child PID to the parent process.
     if (child_pid > 0) {
         printf("Child PID: %i\n", child_pid);
-        exit(0);
+        exit(0); // this kills the parent
     }
 
     // http://man7.org/linux/man-pages/man2/setsid.2.html

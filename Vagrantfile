@@ -15,7 +15,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         ubuntu.vm.provision "shell", inline: "dpkg --add-architecture i386"
         ubuntu.vm.provision "shell", inline: "apt-get update"
         ubuntu.vm.provision "shell", inline: "apt-get install -y libc6:i386 libncurses5:i386 libstdc++6:i386"
-        ubuntu.vm.provision "shell", inline: "apt-get install -y gcc"
+        ubuntu.vm.provision "shell", inline: "apt-get install -y gcc gdb"
         ubuntu.vm.provision "shell", inline: "apt-get install -y bcc"
         ubuntu.vm.provision "shell", inline: "apt-get install -y cgroup-bin"
         ubuntu.vm.provision "shell", inline: "apt-get install -y socat"
