@@ -22,6 +22,7 @@ kill -SIGTERM `pgrep signals` # terminate process
 kill -SIGKILL `pgrep signals` # force kill process
 kill -SIGSTOP `pgrep signals` # pause process
 kill -SIGCONT `pgrep signals` # resume process
+# resize window
 ```
 
 Sending signals:

@@ -28,6 +28,9 @@ int main()
     signal(SIGSTOP, sig_handler);
     signal(SIGCONT, sig_handler);
 
+    // Resize terminal (allows for e.g. redrawing)
+    signal(SIGWINCH, sig_handler);
+
     sleep(600); // 10 min
     return 0;
 }
