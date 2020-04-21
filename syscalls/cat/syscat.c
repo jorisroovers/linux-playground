@@ -26,8 +26,8 @@ void mmap_cat(char *[]);
 
 int main(int argc, char *argv[]) {
 //    simple_cat(argv);
-    complex_cat(argv);
-//    mmap_cat(argv);
+    // complex_cat(argv);
+   mmap_cat(argv);
     return 0;
 }
 
@@ -111,8 +111,9 @@ void mmap_cat(char *argv[]) {
     // location chosen by the kernel (NULL). The begin address is stored in the 'fd' pointer.
     file_buffer = mmap(NULL, stat_buffer.st_size, PROT_READ, MAP_PRIVATE, fd, 0);
 
-    // read the file in the buffer
-    read(fd, file_buffer, stat_buffer.st_size);
+    // The file descriptor of the file can be closed immediately, the contents will still be available in the mapped
+    // memory
+    close(fd);
 
     // write a string of length to file descriptor 1 (=stdout)
     write(1, file_buffer, stat_buffer.st_size);
@@ -120,8 +121,6 @@ void mmap_cat(char *argv[]) {
     // unmap file from memory
     munmap(file_buffer, stat_buffer.st_size);
 
-    // make sure to close our file descriptor at the end
-    close(fd);
     // close stdout
     close(1);
 }

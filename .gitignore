@@ -39,3 +39,4 @@ cgroup/use_memory
 
 # Vagrant log files
 *.log
+.vagrant/*
