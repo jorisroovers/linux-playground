@@ -33,18 +33,18 @@ int main(int argc, char *argv[]) {
     unsigned long BUFF_SIZE = 1024 * 1024 * 5; // 5MB
     
     // mmap() flags
-    // MAP_SHARED   : shared memory
+    // MAP_SHARED: shared memory
     int FLAGS = MAP_SHARED;
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     
     char* buffer;
-    buffer = mmap(NULL                        /* NULL = let kernel decide start address of mapped memory */, 
-                    BUFF_SIZE,                /* amount of bytes to map */
-                    PROT_READ | PROT_WRITE,   /* read-write memory */
-                    FLAGS,
-                    fd,                       
-                    0);                       /* read offset */
+    buffer = mmap(NULL                      /* NULL = let kernel decide start address of mapped memory */, 
+                  BUFF_SIZE,                /* amount of bytes to map */
+                  PROT_READ | PROT_WRITE,   /* read-write memory */
+                  FLAGS,
+                  fd,                       
+                  0);                       /* read offset */
 
     // file is mapped to memory, we don't need to keep the file descriptor open
     close(fd);
@@ -65,6 +65,8 @@ int main(int argc, char *argv[]) {
     char str[100];
     printf("Hit [enter] to terminate");
     fgets(str, 100, stdin);
+    
+    // release hugepages
     munmap(buffer, BUFF_SIZE);
 
     printf("Program exiting...\n");

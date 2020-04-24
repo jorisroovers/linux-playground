@@ -65,8 +65,7 @@ mmap: Cannot allocate memory
 FATAL ERROR
 ```
 
-
-# Huge pages (shared)
+# Shared Huge pages
 ```sh
 # Compile and run program in *background*
 cd hugetables
@@ -74,5 +73,11 @@ mkdir bin
 gcc -std=c99 shared_hugepages.c -o bin/shared_hugepages
 bin/shared_hugepages &
 
+# Shared Huge Pages need to be created on a 'hugetblfs' mount. 
+# Many linux distros have one already pre-mounted:
+$ mount | grep hugetlbfs
+hugetlbfs on /dev/hugepages type hugetlbfs (rw,relatime,pagesize=2M)
+
+# Pass along the a filename on a 'hugetblfs' mount
 sudo bin/shared_hugepages /dev/hugepages/myfile
 ```
