@@ -79,3 +79,28 @@ nix-env -f '<nixpkgs>' -iA bat
 # Switching back to the old profile
 nix-env --switch-profile /nix/var/nix/profiles/per-user/vagrant/profile
 ```
+
+
+# Nixery
+Ad-hoc container images that contain packages from the Nix package manager.
+Images with arbitrary packages can be requested via the image name.
+This is not an official part Nix, but a nice play on it.
+
+```sh
+# Start a docker container with shell, git and htop installed, run bash command
+docker run -ti nixery.dev/shell/git/htop bash
+# Same, but with commands switched around in image name. Shows that the order doesn't matter, same result
+docker run -ti nixery.dev/shell/htop/git bash
+
+# You can basically use anything that's available in the Nix packaging system
+nerdctl run -ti nixery.dev/shell/python310/xsv/git/jq/gitlint/gcc gcc --version
+
+# NOTE: "Meta-packages" automatically expands to several other packages and MUST be put first in the path name.
+# currently only 2 meta packages: `shell` and `arm64`
+
+# Example of piping some input into a NIX container running jq
+curl -s "https://api.github.com/users/jorisroovers/repos" | docker run -i nixery.dev/shell/jq jq -r ".[].name "
+
+# Note that you don't even have to include the 'shell' meta-package for many things to work:
+curl -s "https://api.github.com/users/jorisroovers/repos" | docker run -i nixery.dev/jq jq ".[].name "
+```
